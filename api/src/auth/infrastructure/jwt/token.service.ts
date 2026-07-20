@@ -12,4 +12,8 @@ export class TokenService {
     const payload: JwtPayload = { sub: id, email, full_name: fullName }
     return await this.jwtService.signAsync<JwtPayload>(payload)
   }
+
+  async validateAccessToken(token: string): Promise<JwtPayload> {
+    return await this.jwtService.verifyAsync<JwtPayload>(token)
+  }
 }
