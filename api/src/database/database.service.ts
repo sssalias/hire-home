@@ -19,7 +19,7 @@ export class DatabaseService implements OnModuleInit {
     await this.queryOne<any>(`SELECT 1`)
   }
 
-  public async queryOne<T extends QueryResultRow>(
+  public async queryOne<T extends QueryResultRow = QueryResultRow>(
     sql: string,
     values?: unknown[],
   ): Promise<T | null> {
@@ -28,7 +28,10 @@ export class DatabaseService implements OnModuleInit {
     return result.rows[0] ?? null
   }
 
-  public query<T extends QueryResultRow>(sql: string, values?: unknown[]): Promise<QueryResult<T>> {
+  public query<T extends QueryResultRow = QueryResultRow>(
+    sql: string,
+    values?: unknown[],
+  ): Promise<QueryResult<T>> {
     return this.pool.query<T>(sql, values)
   }
 }
