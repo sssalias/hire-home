@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common'
 import { PG_POOL } from '@/database/database.constants'
-import { Pool, QueryResult, QueryResultRow } from 'pg'
+import { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg'
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {
@@ -28,10 +28,29 @@ export class DatabaseService implements OnModuleInit {
     return result.rows[0] ?? null
   }
 
-  public query<T extends QueryResultRow = QueryResultRow>(
+  public async query<T extends QueryResultRow = QueryResultRow>(
     sql: string,
     values?: unknown[],
   ): Promise<QueryResult<T>> {
-    return this.pool.query<T>(sql, values)
+    return await this.pool.query<T>(sql, values)
+  }
+
+  public async transaction<T>(cb: (client: PoolClient) => Promise<T>): Promise<T> {
+    const client = await this.pool.connect()
+
+    try {
+      await client.query('BEGIN')
+
+      const result = await cb(client)
+
+      await client.query('COMMIT')
+
+      return result
+    } catch (error) {
+      await client.query('ROLLBACK')
+      throw error
+    } finally {
+      client.release()
+    }
   }
 }
