@@ -3,6 +3,7 @@ import { InterviewStatus } from '@/interview/domain/interview.entity'
 export class InterviewReadModel {
   constructor(
     private readonly _id: string,
+    private readonly _candidateId: string,
     private readonly _topic: string,
     private readonly _status: InterviewStatus,
     private readonly _createdAt: Date,
@@ -13,6 +14,10 @@ export class InterviewReadModel {
 
   get id() {
     return this._id
+  }
+
+  get candidateId() {
+    return this._candidateId
   }
 
   get topic() {

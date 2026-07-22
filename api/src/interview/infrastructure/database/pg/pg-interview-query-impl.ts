@@ -17,9 +17,10 @@ export class PgInterviewQueryImpl implements InterviewQuery {
     )
 
     return userInterviewsRow.map(
-      ({ id, topic, created_at, schedule_at, status, started_at, completed_at }) =>
+      ({ id, candidate_id, topic, created_at, schedule_at, status, started_at, completed_at }) =>
         new InterviewReadModel(
           id,
+          candidate_id,
           topic,
           status,
           new Date(created_at),

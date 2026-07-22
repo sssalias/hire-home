@@ -22,11 +22,15 @@ export class CreateInterviewMemberData {
 
 export class CreateInterviewCommand {
   constructor(
+    private readonly _candidateId: string,
     private readonly _topic: string,
     private readonly _scheduleAt: Date,
     private readonly _members: CreateInterviewMemberData[],
   ) {}
 
+  get candidateId() {
+    return this._candidateId
+  }
   get topic() {
     return this._topic
   }

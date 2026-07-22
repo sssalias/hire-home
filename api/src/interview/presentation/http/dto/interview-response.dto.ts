@@ -3,6 +3,7 @@ import { InterviewStatus } from '@/interview/domain/interview.entity'
 export class InterviewResponseDto {
   constructor(
     public readonly id: string,
+    public readonly candidateId: string,
     public readonly topic: string,
     public readonly status: InterviewStatus,
     public readonly created_at: Date,

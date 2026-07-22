@@ -6,11 +6,16 @@ import {
 
 export class CreateInterviewCommandMapper {
   static toCommand(dto: CreateInterviewDto): CreateInterviewCommand {
-    const { topic, schedule_at, members } = dto
+    const { candidateId, topic, schedule_at, members } = dto
     const createInterviewMembersData = members.map(
       ({ user_id, role }) => new CreateInterviewMemberData(user_id, role),
     )
 
-    return new CreateInterviewCommand(topic, new Date(schedule_at), createInterviewMembersData)
+    return new CreateInterviewCommand(
+      candidateId,
+      topic,
+      new Date(schedule_at),
+      createInterviewMembersData,
+    )
   }
 }

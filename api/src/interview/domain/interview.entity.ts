@@ -11,6 +11,7 @@ export enum InterviewStatus {
 export class Interview {
   constructor(
     private readonly _id: string,
+    private readonly _candidateId: string,
     private readonly _topic: string,
     private readonly _status: InterviewStatus,
     private readonly _createdAt: Date,
@@ -20,10 +21,11 @@ export class Interview {
     private readonly _completedAt?: Date,
   ) {}
 
-  static create(topic: string, scheduledAt: Date, members: InterviewMember[]) {
+  static create(candidateId: string, topic: string, scheduledAt: Date, members: InterviewMember[]) {
     const currentDate = new Date()
     return new Interview(
       uuidv7(),
+      candidateId,
       topic,
       InterviewStatus.scheduled,
       currentDate,
@@ -34,6 +36,7 @@ export class Interview {
 
   static restore(
     id: string,
+    candidateId: string,
     topic: string,
     status: InterviewStatus,
     createdAt: Date,
@@ -42,11 +45,25 @@ export class Interview {
     startedAt: Date | undefined,
     completedAt: Date | undefined,
   ) {
-    return new Interview(id, topic, status, createdAt, scheduledAt, members, startedAt, completedAt)
+    return new Interview(
+      id,
+      candidateId,
+      topic,
+      status,
+      createdAt,
+      scheduledAt,
+      members,
+      startedAt,
+      completedAt,
+    )
   }
 
   get id() {
     return this._id
+  }
+
+  get candidateId() {
+    return this._candidateId
   }
 
   get topic() {

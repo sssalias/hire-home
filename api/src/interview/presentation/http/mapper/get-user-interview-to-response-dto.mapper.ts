@@ -6,8 +6,17 @@ export class GetUserInterviewToResponseDtoMapper {
     interviewsReadModel: InterviewReadModel[],
   ): InterviewResponseDto[] {
     return interviewsReadModel.map(
-      ({ id, topic, status, createdAt, scheduleAt, startedAt, completedAt }) =>
-        new InterviewResponseDto(id, topic, status, createdAt, scheduleAt, startedAt, completedAt),
+      ({ id, candidateId, topic, status, createdAt, scheduleAt, startedAt, completedAt }) =>
+        new InterviewResponseDto(
+          id,
+          candidateId,
+          topic,
+          status,
+          createdAt,
+          scheduleAt,
+          startedAt,
+          completedAt,
+        ),
     )
   }
 }
