@@ -12,6 +12,8 @@ export class PgInterviewRepositoryImpl implements InterviewRepository {
 
   private static readonly INSERT_INTERVIEW_MEMBER_SQL = `INSERT INTO interview_members (id, interview_id, user_id, role) VALUES ($1, $2, $3, $4)`
 
+  private static readonly SELECT_INTERVIEW_MEMBERS_BY_INTERVIEW_ID = `SELECT * FROM interview_members WHERE interview_id = $1`
+
   async save(interview: Interview): Promise<void> {
     const { id, topic, status, members, scheduleAt, startedAt, createdAt, completedAt } = interview
 

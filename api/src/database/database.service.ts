@@ -28,11 +28,10 @@ export class DatabaseService implements OnModuleInit {
     return result.rows[0] ?? null
   }
 
-  public async query<T extends QueryResultRow = QueryResultRow>(
-    sql: string,
-    values?: unknown[],
-  ): Promise<QueryResult<T>> {
-    return await this.pool.query<T>(sql, values)
+  public async query<T extends QueryResultRow>(sql: string, values: unknown[] = []): Promise<T[]> {
+    const result = await this.pool.query<T>(sql, values)
+
+    return result.rows
   }
 
   public async transaction<T>(cb: (client: PoolClient) => Promise<T>): Promise<T> {
