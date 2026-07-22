@@ -7,6 +7,7 @@ import type { JwtPayload } from '@/auth/infrastructure/jwt/types/jwt-payload'
 import { GetUserInterviewsUseCase } from '@/interview/application/get-user-interviews/get-user-interviews.use-case'
 import { GetUserInterviewsCommand } from '@/interview/application/get-user-interviews/get-user-interviews.command'
 import { InterviewResponseDto } from '@/interview/presentation/http/dto/interview-response.dto'
+import { GetUserInterviewToResponseDtoMapper } from '@/interview/presentation/http/mapper/get-user-interview-to-response-dto.mapper'
 
 @Controller('interview')
 export class InterviewController {
@@ -26,9 +27,6 @@ export class InterviewController {
     const userInterviews = await this.getUserInterviewsUseCase.execute(
       new GetUserInterviewsCommand(sub),
     )
-    return userInterviews.map(
-      ({ id, topic, status, createdAt, scheduleAt, startedAt, completedAt }) =>
-        new InterviewResponseDto(id, topic, status, createdAt, scheduleAt, startedAt, completedAt),
-    )
+    return GetUserInterviewToResponseDtoMapper.toResponseUserInterviewsDto(userInterviews)
   }
 }
