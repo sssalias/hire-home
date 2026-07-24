@@ -3,6 +3,7 @@ import { TokenService } from '@/auth/infrastructure/jwt/token.service'
 import { HashService } from '@/auth/infrastructure/bcrypt/hash.service'
 import { UserRepository } from '@/users/domain/user.repository'
 import { LoginCommand } from '@/auth/application/login/command/login.command'
+import { WrongCredentialsError } from '@/auth/domain/errors/wrong-credentials.error'
 
 @Injectable()
 export class LoginUseCase {
@@ -24,7 +25,7 @@ export class LoginUseCase {
     const isValidPassword = await this.hashService.compare(password, user.passwordHash)
 
     if (!isValidPassword) {
-      throw new BadRequestException('Неверный пароль!')
+      throw new WrongCredentialsError()
     }
 
     return await this.tokenService.createAccessToken(user)

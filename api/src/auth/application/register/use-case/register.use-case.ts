@@ -1,9 +1,10 @@
-import { ConflictException, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { RegisterCommand } from '@/auth/application/register/command/register.command'
 import { HashService } from '@/auth/infrastructure/bcrypt/hash.service'
 import { TokenService } from '@/auth/infrastructure/jwt/token.service'
 import { UserRepository } from '@/users/domain/user.repository'
 import { User } from '@/users/domain/user.entity'
+import { UserEmailAlreadyExistsError } from '@/auth/domain/errors/user-email-already-exists.error'
 
 @Injectable()
 export class RegisterUseCase {
@@ -17,7 +18,7 @@ export class RegisterUseCase {
     const existingUser = await this.userRepository.findByEmail(email)
 
     if (existingUser) {
-      throw new ConflictException('Пользователь с таким email уже существует!')
+      throw new UserEmailAlreadyExistsError(email)
     }
 
     const passwordHash = await this.hashService.hash(password)

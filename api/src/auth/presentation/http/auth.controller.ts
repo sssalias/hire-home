@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { RegisterDto } from '@/auth/presentation/http/dto/register.dto'
 import { RegisterUseCase } from '@/auth/application/register/use-case/register.use-case'
 import { RegisterCommand } from '@/auth/application/register/command/register.command'
@@ -12,6 +12,7 @@ import { type JwtPayload } from '@/auth/infrastructure/jwt/types/jwt-payload'
 import { MeUseCase } from '@/auth/application/me/use-case/me.use-case'
 import { MeCommand } from '@/auth/application/me/command/me.command'
 import { MeResponseDto } from '@/auth/presentation/http/dto/me-response.dto'
+import { PasswordAndPasswordRepeatNotEquals } from '@/auth/domain/errors/password-and-password-repeat-not-equals'
 
 @Controller('auth')
 export class AuthController {
@@ -26,7 +27,7 @@ export class AuthController {
   async register(@Body() dto: RegisterDto): Promise<TokenResponseDto> {
     const { email, password, password_repeat, full_name } = dto
     if (password != password_repeat) {
-      throw new BadRequestException('Пароли не совпадают!')
+      throw new PasswordAndPasswordRepeatNotEquals()
     }
     const access_token = await this.registerUseCase.execute(
       new RegisterCommand(email, password, full_name),
