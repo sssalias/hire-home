@@ -2,5 +2,6 @@ import { httpClient } from '@/shared/api/http-client.ts'
 import type { MeResponseDto } from '@/features/auth/api/dto'
 
 export const me = async () => {
-  return await httpClient.get<MeResponseDto>('/auth/me')
+  const { data } = await httpClient.get<MeResponseDto>('/auth/me')
+  return data
 }

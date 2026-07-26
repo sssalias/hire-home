@@ -41,6 +41,8 @@ const attrs = useAttrs()
   font-size: var(--font-size-md);
 
   background-color: var(--color-surface);
+
+  color: var(--color-text-primary);
 }
 .field-label {
   display: flex;

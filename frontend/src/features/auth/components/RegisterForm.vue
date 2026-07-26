@@ -15,9 +15,7 @@
         {{ isSubmitting ? 'Регистрируемся.' : 'Зарегестрироваться' }}
       </UiButton>
     </form>
-    <span class="register-register-link"
-      >Уже есть аккаунт? <UiLink path="/register">Войти</UiLink>
-    </span>
+    <span class="register-login-link">Уже есть аккаунт? <UiLink path="login">Войти</UiLink> </span>
   </div>
 </template>
 
@@ -57,7 +55,6 @@ const onSubmit = handleSubmit(async (values) => {
 
 <style scoped>
 .register-form-wrapper {
-  height: 400px;
   width: 500px;
   border-radius: var(--radius-xl);
   background-color: var(--color-surface-secondary);
@@ -66,6 +63,7 @@ const onSubmit = handleSubmit(async (values) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: var(--space-4);
 }
 
 .register-form {
@@ -84,8 +82,9 @@ const onSubmit = handleSubmit(async (values) => {
   padding: var(--space-3);
 }
 
-.register-register-link {
+.register-login-link {
   font-size: var(--font-size-md);
   margin-top: auto;
+  color: var(--color-text-primary);
 }
 </style>

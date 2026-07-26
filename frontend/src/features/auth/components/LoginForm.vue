@@ -9,7 +9,7 @@
       </UiButton>
     </form>
     <span class="login-register-link"
-      >Еще нет аккаунта? <UiLink path="/register">Зарегистрироваться</UiLink>
+      >Еще нет аккаунта? <UiLink path="register">Зарегистрироваться</UiLink>
     </span>
   </div>
 </template>
@@ -33,7 +33,7 @@ const formError = ref('')
 const onSubmit = handleSubmit(async (values) => {
   try {
     await login({ email: values.email, password: values.password })
-    await router.push({ path: '/register' })
+    await router.push({ path: '/' })
   } catch (error) {
     formError.value =
       error instanceof ApiError ? error.message : 'Не удалось выполнить вход. Попробуйте позже.'
@@ -43,7 +43,6 @@ const onSubmit = handleSubmit(async (values) => {
 
 <style scoped>
 .login-form-wrapper {
-  height: 400px;
   width: 500px;
   border-radius: var(--radius-xl);
   background-color: var(--color-surface-secondary);
@@ -52,6 +51,7 @@ const onSubmit = handleSubmit(async (values) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: var(--space-4);
 }
 
 .login-form {
@@ -73,5 +73,6 @@ const onSubmit = handleSubmit(async (values) => {
 .login-register-link {
   font-size: var(--font-size-md);
   margin-top: auto;
+  color: var(--color-text-primary);
 }
 </style>

@@ -1,5 +1,13 @@
-import { login, type LoginDto, register, type RegisterDto } from '@/features/auth/api'
+import {
+  login,
+  type LoginDto,
+  me,
+  type MeResponseDto,
+  register,
+  type RegisterDto,
+} from '@/features/auth/api'
 import { tokenService } from '@/shared/utils'
+import { useQuery } from '@/shared/composable'
 
 export const useAuth = () => {
   const loginUser = async (dto: LoginDto) => {
@@ -19,8 +27,19 @@ export const useAuth = () => {
     }
   }
 
+  const getMeUser = () =>
+    useQuery<MeResponseDto>({
+      queryFunc: me,
+    })
+
+  const logoutUser = () => {
+    tokenService.removeToken()
+  }
+
   return {
     login: loginUser,
     register: registerUser,
+    getUser: getMeUser,
+    logout: logoutUser,
   }
 }

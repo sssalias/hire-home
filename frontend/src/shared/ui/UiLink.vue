@@ -1,5 +1,5 @@
 <template>
-  <RouterLink class="link" :to="path">
+  <RouterLink class="link" :to="{ name: path }">
     <slot />
   </RouterLink>
 </template>
@@ -13,5 +13,7 @@ defineProps<{
 <style scoped>
 .link {
   color: var(--color-primary);
+  outline: none;
+  text-decoration: none;
 }
 </style>
